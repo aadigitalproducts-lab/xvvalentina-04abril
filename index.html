@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mis XV Años - Valentina</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- 1. CONFIGURACIÓN BASE (TEMA ROJO & GOLD) --- */
+        :root {
+            --gold: #cba135;
+            --gold-light: #fbeea9;
+            --gold-shiny: #e6c76c;
+            --red-deep: #8a0303;
+            /* Rojo Intenso Elegane */
+            --red-bright: #c91818;
+            /* Rojo Brillante para detalles */
+            --bg-cream: #fffdfd;
+            /* Fondo casi blanco con tinte rojizo imperceptible */
+            --text-dark: #333333;
+            --text-red: #5e0b0b;
+            --font-script: 'Great Vibes', cursive;
+            --font-header: 'Cinzel', serif;
+            --font-body: 'Lato', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            font-family: var(--font-body);
+            /* Patrón de fondo sutil */
+            background-image: radial-gradient(rgba(203, 161, 53, 0.2) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        #petals-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            /* Aumentado para pasar sobre las tarjetas blancas */
+            overflow: hidden;
+        }
+
+        /* --- 2. EL SOBRE 3D --- */
+        #envelope-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #3a0000, #000);
+            /* Fondo oscuro rojizo */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1.5s ease;
+            flex-direction: column;
+        }
+
+        .remove-overlay {
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .envelope-wrapper {
+            width: 320px;
+            height: 220px;
+            position: relative;
+            cursor: pointer;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: var(--red-deep);
+            /* Sobre ROJO */
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
+            border-radius: 4px;
+        }
+
+        /* Colores de las solapas del sobre rojo */
+        .flap {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+
+        /* Izquierda y Derecha un poco más oscuros que la base para dar profundidad */
+        .flap.left {
+            top: 0;
+            left: 0;
+            border-width: 110px 160px 110px 0;
+            border-color: transparent #750202 transparent transparent;
+            z-index: 2;
+        }
+
+        .flap.right {
+            top: 0;
+            right: 0;
+            border-width: 110px 0 110px 160px;
+            border-color: transparent transparent transparent #750202;
+            z-index: 2;
+        }
+
+        /* Abajo un poco más claro */
+        .flap.bottom {
+            bottom: 0;
+            left: 0;
+            border-width: 0 160px 120px 160px;
+            border-color: transparent transparent #960505 transparent;
+            z-index: 3;
+            filter: drop-shadow(0 -5px 5px rgba(0, 0, 0, 0.2));
+        }
+
+        /* Tapa superior */
+        .flap.top {
+            top: 0;
+            left: 0;
+            border-width: 120px 160px 0 160px;
+            border-color: #8a0303 transparent transparent transparent;
+            z-index: 4;
+            transform-origin: top;
+            transition: transform 0.8s ease-in-out, z-index 0.2s linear 0.4s;
+        }
+
+        /* Borde dorado en la tapa */
+        .flap.top::after {
+            content: '';
+            position: absolute;
+            top: -120px;
+            left: -160px;
+            width: 320px;
+            height: 120px;
+            border-top: 5px solid var(--gold);
+            /* Borde dorado */
+            clip-path: polygon(50% 100%, 0 0, 100% 0);
+        }
+
+        .wax-seal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -40%);
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b);
+            /* Sello DORADO */
+            border-radius: 50%;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: var(--font-header);
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #5e4b18;
+            border: 2px solid #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .card-preview {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            background: #fffcf5;
+            z-index: 1;
+            transition: transform 1s ease 0.6s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid var(--gold);
+        }
+
+        .card-preview h3 {
+            animation: softBeat 2s infinite;
+            color: var(--red-deep);
+        }
+
+        .envelope-wrapper.open .flap.top {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope-wrapper.open .wax-seal {
+            opacity: 0;
+            transform: scale(1.5);
+        }
+
+        .envelope-wrapper.open .card-preview {
+            transform: translateY(-160px);
+            z-index: 6;
+        }
+
+
+        /* --- ESTRELLAS / GLITTER --- */
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: twinkle var(--duration) ease-in-out var(--delay) infinite;
+            box-shadow: 0 0 5px #fff, 0 0 10px var(--gold);
+            z-index: 1;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            50% {
+                opacity: 0.8;
+                transform: scale(1.2);
+            }
+        }
+
+        /* --- 3. EFECTOS (PÉTALOS ROJOS Y DORADOS) --- */
+        .petal {
+            position: absolute;
+            top: -10%;
+            opacity: 0;
+            background: var(--red-bright);
+            border-radius: 100% 0% 100% 0%;
+            animation: fall linear infinite;
+        }
+
+        .petal:nth-child(even) {
+            background: var(--gold);
+            border-radius: 0% 100% 0% 100%;
+        }
+
+        .petal:nth-child(3n) {
+            background: transparent;
+            box-shadow: inset 0 0 0 2px var(--red-deep);
+            border-radius: 50%;
+        }
+
+        /* --- GLOBOS Y CONFETI --- */
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 40px;
+            height: 50px;
+            background: var(--red-deep);
+            border-radius: 50%;
+            z-index: 2000;
+            animation: floatUp 4s ease-in forwards;
+        }
+
+        .balloon::before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            z-index: 2000;
+            animation: confettiFall 3s linear forwards;
+        }
+
+        @keyframes floatUp {
+            to {
+                bottom: 120%;
+                transform: translateX(20px);
+            }
+        }
+
+        @keyframes confettiFall {
+            to {
+                top: 120%;
+                transform: rotate(720deg) translateX(50px);
+            }
+        }
+
+        /* --- 4. CONTENIDO PRINCIPAL --- */
+        #main-content {
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            position: relative;
+            z-index: 10;
+        }
+
+        .show-content {
+            opacity: 1 !important;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 0 20px rgba(138, 3, 3, 0.1);
+            padding-bottom: 80px;
+        }
+
+        section {
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-family: var(--font-script);
+            font-size: 4.5rem;
+            color: var(--red-deep);
+            /* Título Rojo */
+            line-height: 1.2;
+            margin: 10px 0 20px 0;
+            padding: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-family: var(--font-header);
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 2px solid var(--gold);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .shimmer-text {
+            background: linear-gradient(to right, var(--gold) 0%, var(--gold-shiny) 50%, var(--gold) 100%);
+            background-size: 200% auto;
+            color: var(--gold);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s linear infinite;
+            display: inline-block;
+        }
+
+        .polaroid {
+            background: #fff;
+            padding: 12px;
+            padding-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            transform: rotate(-2deg);
+            max-width: 90%;
+            transition: transform 0.3s;
+            border: 1px solid var(--gold-light);
+            animation: softGlow 4s ease-in-out infinite alternate;
+        }
+
+        .polaroid img {
+            width: 100%;
+            display: block;
+            filter: contrast(105%);
+        }
+
+        /* --- KEYFRAMES FOR HERO ANIMATION --- */
+        @keyframes heroEntrance {
+            0% {
+                transform: scale(0.8) translateY(20px) rotate(-5deg);
+                opacity: 0;
+                filter: blur(10px);
+            }
+
+            100% {
+                transform: scale(1) translateY(0) rotate(-2deg);
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        @keyframes heroFloat {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-2deg);
+                box-shadow: 0 10px 25px rgba(203, 161, 53, 0.4);
+            }
+
+            50% {
+                transform: translateY(-10px) rotate(-1deg);
+                box-shadow: 0 20px 40px rgba(138, 3, 3, 0.3);
+            }
+        }
+
+        @keyframes borderGlow {
+
+            0%,
+            100% {
+                border-color: var(--gold-light);
+            }
+
+            50% {
+                border-color: var(--gold);
+            }
+        }
+
+        /* CLASE PREMIUM PARA LA FOTO PRINCIPAL */
+        .premium-hero {
+            animation: heroEntrance 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
+                heroFloat 6s ease-in-out infinite 1.5s,
+                /* Comienza a flotar después de la entrada */
+                borderGlow 3s infinite alternate;
+
+            border: 4px solid var(--gold-light);
+            border-radius: 10px 10px 60px 10px;
+            /* Borde asimétrico elegante */
+            position: relative;
+            z-index: 5;
+            overflow: hidden;
+            background: #fff;
+            padding: 8px;
+            /* Marco blanco interno */
+        }
+
+        .premium-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transform: rotate(45deg);
+            animation: shine 4s infinite 3s;
+            /* Pasada de brillo periódica */
+            pointer-events: none;
+        }
+
+        @keyframes shine {
+            0% {
+                left: -100%;
+                top: -100%;
+            }
+
+            20% {
+                left: 100%;
+                top: 100%;
+            }
+
+            100% {
+                left: 100%;
+                top: 100%;
+            }
+        }
+
+
+        /* Timeline de XV Años */
+        .story-timeline {
+            border-left: 2px dashed var(--red-deep);
+            margin-left: 20px;
+            padding-left: 30px;
+            text-align: left;
+        }
+
+        .story-block {
+            position: relative;
+            margin-bottom: 60px;
+        }
+
+        .story-icon-box {
+            position: absolute;
+            left: -46px;
+            top: 0;
+            width: 32px;
+            height: 32px;
+            background: #fff;
+            border: 2px solid var(--red-deep);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--gold);
+            z-index: 2;
+            animation: beat 3s infinite;
+        }
+
+        .romantic-photo {
+            position: relative;
+            background: #fff;
+            padding: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transform-origin: center center;
+            margin-top: 15px;
+            border-radius: 4px;
+            border: 1px solid var(--gold);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Inclinación alternada */
+        .story-block:nth-child(odd) .romantic-photo {
+            transform: rotate(-3deg);
+        }
+
+        .story-block:nth-child(even) .romantic-photo {
+            transform: rotate(3deg);
+        }
+
+        /* Efecto al pasar el mouse o tocar */
+        .romantic-photo:hover {
+            transform: rotate(0deg) scale(1.05) !important;
+            box-shadow: 0 15px 30px rgba(138, 3, 3, 0.2);
+            z-index: 10;
+        }
+
+        .romantic-photo img {
+            width: 100%;
+            border-radius: 2px;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .dress-icon {
+            font-size: 3rem;
+            color: var(--red-deep);
+            margin-bottom: 15px;
+            animation: sway 4s infinite ease-in-out;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .time-box {
+            background: var(--red-deep);
+            color: var(--gold);
+            padding: 10px;
+            min-width: 60px;
+            border-radius: 5px;
+            border: 1px solid var(--gold);
+        }
+
+        .time-box span {
+            font-size: 1.5rem;
+            display: block;
+            font-family: var(--font-header);
+        }
+
+        .time-box small {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        /* --- BOTONES --- */
+        .btn-calendar {
+            background: transparent;
+            color: var(--red-deep);
+            border: 2px solid var(--red-deep);
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .btn-calendar:hover {
+            background: var(--red-deep);
+            color: #fff;
+        }
+
+        .btn-maps {
+            background: var(--text-dark);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .btn-whatsapp-big {
+            display: block;
+            background: #25D366;
+            color: white;
+            width: 90%;
+            max-width: 350px;
+            margin: 30px auto;
+            padding: 18px 20px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+            position: relative;
+            z-index: 100;
+            transition: transform 0.2s;
+            animation: pulseBtn 2s infinite;
+        }
+
+        .music-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #fff;
+            border: 2px solid var(--red-deep);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--red-deep);
+            font-size: 1.5rem;
+            z-index: 999;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        .spin {
+            animation: spin 4s linear infinite;
+        }
+
+        /* MINI JUEGO CORONA */
+        #game-area {
+            width: 100%;
+            height: 250px;
+            background: #fff0f0;
+            border: 2px dashed var(--red-deep);
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        #target-icon {
+            font-size: 3rem;
+            position: absolute;
+            cursor: pointer;
+            user-select: none;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.2));
+        }
+
+        /* --- ANIMACIONES --- */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: translate(-50%, -40%) scale(1);
+            }
+
+            50% {
+                transform: translate(-50%, -40%) scale(1.1);
+            }
+
+            100% {
+                transform: translate(-50%, -40%) scale(1);
+            }
+        }
+
+        @keyframes softBeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fall {
+            0% {
+                top: -10%;
+                transform: translateX(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                top: 110%;
+                transform: translateX(50px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes pulseBtn {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 20px rgba(37, 211, 102, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        @keyframes sway {
+            0% {
+                transform: rotate(-3deg);
+            }
+
+            50% {
+                transform: rotate(3deg);
+            }
+
+            100% {
+                transform: rotate(-3deg);
+            }
+        }
+
+        @keyframes beat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        @keyframes shimmer {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* ESTILOS TICKET / PASE */
+        .ticket {
+            background: #fff;
+            border: 2px solid var(--gold);
+            border-radius: 10px;
+            overflow: hidden;
+            max-width: 350px;
+            margin: 0 auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .ticket::before,
+        .ticket::after {
+            content: '';
+            position: absolute;
+            top: 110px;
+            width: 30px;
+            height: 30px;
+            background: var(--bg-cream);
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            z-index: 2;
+        }
+
+        .ticket::before {
+            left: -18px;
+            border-left: none;
+        }
+
+        .ticket::after {
+            right: -18px;
+            border-right: none;
+        }
+
+        /* --- TICKET SHINE (Diamond Effect) --- */
+        .ticket {
+            position: relative;
+            overflow: hidden;
+            /* Importante para que el brillo no se salga */
+        }
+
+        .ticket-shine {
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.4) 50%,
+                    rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-25deg);
+            animation: diamond-shine 4s infinite;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        @keyframes diamond-shine {
+            0% {
+                left: -150%;
+            }
+
+            30% {
+                left: 150%;
+            }
+
+            100% {
+                left: 150%;
+            }
+        }
+
+        .ticket-header {
+            background: var(--red-deep);
+            color: var(--gold);
+            padding: 15px;
+            text-align: center;
+            font-family: var(--font-header);
+            font-weight: bold;
+            border-bottom: 2px dashed var(--gold);
+        }
+
+        .ticket-body {
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        /* --- MAPA --- */
+        .map-container {
+            margin-top: 30px;
+            border: 2px solid var(--gold);
+            border-radius: 10px;
+            overflow: hidden;
+            height: 250px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            filter: grayscale(1) contrast(1.1) sepia(0.3);
+            transition: filter 0.8s ease;
+        }
+
+        .map-container:hover iframe {
+            filter: grayscale(0) contrast(1) sepia(0);
+        }
+
+        /* --- LIGHTBOX --- */
+        #lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        #lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        #lightbox-img {
+            max-width: 90%;
+            max-height: 80%;
+            border: 3px solid var(--gold);
+            border-radius: 5px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            transform: scale(0.8);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #lightbox.active #lightbox-img {
+            transform: scale(1);
+        }
+
+        #lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #fff;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 10001;
+        }
+
+        /* --- TYPEWRITER --- */
+        .typewriter-container {
+            padding: 40px 20px;
+            text-align: center;
+            min-height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.4);
+            margin: 20px 0;
+            border-radius: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        #typewriter-text {
+            font-family: var(--font-script);
+            font-size: 1.8rem;
+            color: var(--red-deep);
+            line-height: 1.5;
+            display: inline-block;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.8rem;
+            background-color: var(--gold);
+            margin-left: 5px;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+
+            0%,
+            49% {
+                opacity: 1;
+            }
+
+            50%,
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* --- NOMBRE SHIMMER --- */
+        .shimmer-name {
+            background: linear-gradient(to right,
+                    var(--red-deep) 0%,
+                    var(--red-deep) 40%,
+                    var(--gold-shiny) 50%,
+                    var(--red-deep) 60%,
+                    var(--red-deep) 100%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shine-name 4s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes shine-name {
+            to {
+                background-position: 200% center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <audio id="bgMusic" loop playsinline>
+        <source src="musica.mp3" type="audio/mpeg">
+    </audio>
+    <div class="music-btn" id="musicCtrl" onclick="toggleMusic()"><i class="fas fa-compact-disc"></i></div>
+
+    <div id="petals-container"></div>
+
+    <div id="envelope-overlay">
+        <div class="envelope-wrapper" onclick="openEnvelope()">
+            <div class="envelope">
+                <div class="flap top"></div>
+                <div class="flap right"></div>
+                <div class="flap bottom"></div>
+                <div class="flap left"></div>
+                <div class="wax-seal">15</div>
+                <div class="card-preview">
+                    <!-- Texto actualizado a petición -->
+                    <h3 style="font-family: var(--font-script); font-size: 2.5rem; color: var(--gold-dark);">XV
+                        Valentina</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Texto centrado debajo del sobre -->
+        <p
+            style="text-align: center; color: #fff; font-family: var(--font-header); letter-spacing: 2px; animation: pulse 2s infinite; margin-top: 50px; pointer-events: none;">
+            TOCA EL SELLO
+        </p>
+    </div>
+
+    <div id="main-content">
+        <div class="container">
+
+            <section style="padding-top: 60px;">
+                <p
+                    style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; color: var(--text-dark); margin-bottom: 20px;">
+                    Sus Abuelitos:<br>
+                    <strong style="color: var(--red-deep); font-size: 1rem;">J. Leon Hernández Rodarte</strong><br>
+                    <strong style="color: var(--red-deep); font-size: 1rem;">Brigida Diaz Ordaz Altamirano</strong><br>
+                    Tienen el honor de invitarlos a los XV Años de su Nieta
+                </p>
+                <!-- Nombre con efecto dorado pero color base rojo se define en CSS distinto si se quiere-->
+                <h1 class="shimmer-name" style="font-size: 4rem;">Valentina Najaivy</h1>
+
+                <div class="polaroid reveal">
+                    <img src="foto_principal.jpg" alt="Valentina XV Años" class="premium-hero"
+                        style="min-height: 200px; display:block; object-fit: cover;">
+                </div>
+
+                <p class="reveal"
+                    style="font-style: italic; margin-top: 20px; font-family: var(--font-header); color: var(--gold);">
+                    "Hoy dejo de ser una niña para comenzar a soñar como mujer."
+                </p>
+            </section>
+
+            <div style="text-align:center; margin: 20px 0; font-size: 2rem; color: var(--gold);">
+                <i class="fas fa-crown"></i>
+            </div>
+
+            <section>
+                <div class="reveal">
+                    <h2>Save The Date</h2>
+                    <p
+                        style="font-size: 1.8rem; color: var(--red-deep); font-weight: bold; font-family: var(--font-script);">
+                        Sábado 04 de Abril</p>
+                    <p style="font-size: 1.2rem; margin-bottom: 10px;">2026</p>
+                    <p style="font-size: 1.5rem; color: var(--text-dark); margin-bottom: 20px;">9:00 PM</p>
+
+                    <div class="countdown">
+                        <div class="time-box"><span id="d">00</span><small>Días</small></div>
+                        <div class="time-box"><span id="h">00</span><small>Hrs</small></div>
+                        <div class="time-box"><span id="m">00</span><small>Min</small></div>
+                        <div class="time-box"><span id="s">00</span><small>Seg</small></div>
+                    </div>
+
+                    <div class="action-buttons"
+                        style="margin-top: 40px; display:flex; flex-direction:column; align-items:center; gap:15px;">
+                        <a href="https://calendar.google.com/calendar/r/eventedit?text=XV+Años+Valentina+Najaivy&dates=20260404T210000/20260405T030000&details=¡Te+espero+para+celebrar+mis+15+años!&location=El+Rincon+Eventos"
+                            target="_blank" class="btn-calendar">
+                            <i class="far fa-calendar-alt"></i> Agendar
+                        </a>
+
+                        <a href="https://www.google.com/maps/place/El+Rincon+Eventos/@24.0091809,-104.6589556,21z/data=!4m6!3m5!1s0x869bc802755a8d53:0xe9d0fdd2003c362e!8m2!3d24.0092102!4d-104.6587864!16s%2Fg%2F1hm42bm5d"
+                            target="_blank" class="btn-maps">
+                            <i class="fas fa-map-pin"></i> Ver Ubicación (El Rincón Eventos)
+                        </a>
+                    </div>
+
+                    <!-- Mapa interactivo sutil -->
+                    <div class="map-container reveal">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1822.3168239049!2d-104.658786!3d24.00921!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x869bc802755a8d53%3A0xe9d0fdd2003c362e!2sEl%20Rincon%20Eventos!5e0!3m2!1ses!2smx!4v1707255000000!5m2!1ses!2smx"
+                            allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Frase con Efecto Máquina de Escribir -->
+            <section class="reveal" style="background: transparent; padding: 20px 0;">
+                <div class="typewriter-container">
+                    <span id="typewriter-text"></span><span class="cursor"></span>
+                </div>
+            </section>
+
+            <section style="background: #fff; border-top: 1px solid #eee; border-bottom: 1px solid #eee;">
+                <h2>Mi Historia</h2>
+
+                <div class="story-timeline">
+
+                    <div class="story-block reveal">
+                        <div class="story-icon-box"><i class="fas fa-baby"></i></div>
+                        <h3 style="color: var(--red-deep); font-family: var(--font-header);">Un Comienzo Feliz</h3>
+                        <p>Recuerdos llenos de alegría y ternura desde mis primeros pasos.</p>
+                        <div class="romantic-photo">
+                            <img src="recuerdo_1.jpg" alt="Recuerdo 1"
+                                style="min-height: 150px; background:#f9f9f9; object-fit: cover;">
+                        </div>
+                    </div>
+
+                    <div class="story-block reveal">
+                        <div class="story-icon-box"><i class="fas fa-child"></i></div>
+                        <h3 style="color: var(--red-deep); font-family: var(--font-header);">Creciendo con Amor</h3>
+                        <p>Cada año una nueva enseñanza y momentos inolvidables.</p>
+                        <div class="romantic-photo">
+                            <img src="recuerdo_2.jpg" alt="Recuerdo 2"
+                                style="min-height: 150px; background:#f9f9f9; object-fit: cover;">
+                        </div>
+                    </div>
+
+                    <div class="story-block reveal">
+                        <div class="story-icon-box"><i class="fas fa-star"></i></div>
+                        <h3 style="color: var(--red-deep); font-family: var(--font-header);">Nuevas Aventuras</h3>
+                        <p>Descubriendo el mundo y formando amistades valiosas.</p>
+                        <div class="romantic-photo">
+                            <img src="recuerdo_3.jpg" alt="Recuerdo 3"
+                                style="min-height: 150px; background:#f9f9f9; object-fit: cover;">
+                        </div>
+                    </div>
+
+                    <div class="story-block reveal">
+                        <div class="story-icon-box"><i class="fas fa-heart"></i></div>
+                        <h3 style="color: var(--red-deep); font-family: var(--font-header);">Hoy Mis 15</h3>
+                        <p>El inicio de una nueva y hermosa etapa en mi vida.</p>
+                        <div class="romantic-photo">
+                            <img src="recuerdo_4.jpg" alt="Recuerdo 4"
+                                style="min-height: 150px; background:#f9f9f9; object-fit: cover;">
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section style="background: rgba(255,215,0,0.05);">
+                <div class="reveal">
+                    <h2>¡Atrapa la Corona!</h2>
+                    <p style="margin-bottom:10px;">¡Ayúdame a encontrar mi corona! Tócala 5 veces.</p>
+                    <div id="game-area">
+                        <div id="target-icon" onclick="clickTarget()">👑</div>
+                    </div>
+                    <p id="game-msg">Puntos: 0</p>
+                </div>
+            </section>
+
+            <section>
+                <div class="reveal">
+                    <h2>Detalles</h2>
+                    <div class="dress-icon">
+                        <i class="fas fa-female"></i>
+                    </div>
+                    <p style="font-size: 1.1rem; color: var(--text-dark);"><strong>Código de Vestimenta</strong></p>
+                    <p style="color: var(--red-deep);">FORMAL</p>
+                    <p style="font-size: 0.9rem; margin-top:5px; color:#666;">(Se reserva el color rojo para la
+                        festejada)</p>
+
+                    <div
+                        style="margin-top: 30px; border: 1px dashed var(--gold); padding: 20px; border-radius: 10px; display:inline-block;">
+                        <i class="fas fa-gift" style="font-size: 2rem; color: var(--gold); margin-bottom: 10px;"></i>
+                        <p><strong>Lluvia de Sobres</strong></p>
+                        <p style="font-size: 0.9rem;">Tu presencia es mi mayor regalo, pero si deseas tener un detalle
+                            conmigo, habrá un buzón en la entrada.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section style="background: #fff; padding-bottom: 60px;" id="confirm-section">
+                <div class="reveal">
+                    <h2>Confirmación</h2>
+                    <p style="margin-bottom: 20px;">Tu presencia es nuestro mejor regalo.</p>
+
+                    <!-- Botón para abrir formulario -->
+                    <!-- Botón para abrir formulario -->
+                    <button onclick="showForm()" class="btn-whatsapp-big"
+                        style="background: var(--red-deep); color: var(--gold-light); border: 2px solid var(--gold); cursor: pointer;">
+                        <i class="fas fa-clipboard-check"></i> CONFIRMAR ASISTENCIA
+                    </button>
+
+                    <!-- Área del Formulario (Oculte inicialmente) -->
+                    <div id="form-container" style="display:none; margin-top:30px; animation: fadeIn 1s;">
+                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">
+                            1. Llena el formulario a continuación.<br>
+                            2. <strong>Tu Folio asignado se enviará automáticamente.</strong><br>
+                            3. Al terminar de enviar, presiona el botón "Obtener mi Pase".
+                        </p>
+
+                        <!-- IFRAME DE GOOGLE FORMS -->
+                        <div
+                            style="position: relative; padding-bottom: 130%; height: 0; overflow: hidden; max-width: 100%;">
+                            <!-- Nota: El src se actualiza vía JS para incluir el folio -->
+                            <iframe id="gform-frame" src=""
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 8px; box-shadow: inset 0 0 10px rgba(0,0,0,0.1);"
+                                frameborder="0" marginheight="0" marginwidth="0">Cargando...</iframe>
+                        </div>
+
+                        <button onclick="showPass()" class="btn-maps"
+                            style="margin-top: 20px; background: var(--gold); color: var(--red-deep); border: 1px solid var(--red-deep); cursor: pointer;">
+                            <i class="fas fa-ticket-alt"></i> YA LO ENVIÉ: OBTENER MI PASE
+                        </button>
+                    </div>
+
+                    <!-- Elemento oculto para compatibilidad con JS existente -->
+                    <div id="form-container" style="display:none;"></div>
+
+                    <!-- PASE QR (Oculto inicialmente) -->
+                    <div id="qr-pass" style="display:none; margin-top: 30px; animation: slideUp 0.8s ease;">
+                        <div class="ticket">
+                            <div class="ticket-shine"></div>
+                            <div class="ticket-header">
+                                <i class="fas fa-crown"></i> PASE DE ACCESO XV <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="ticket-body">
+                                <p
+                                    style="font-family: var(--font-header); color: var(--red-deep); font-weight: bold; font-size: 1.2rem;">
+                                    FAMILIA / INVITADO</p>
+
+                                <!-- NUEVO: Folio del Ticket -->
+                                <div
+                                    style="background: var(--gold-light); color: var(--text-dark); padding: 5px 10px; margin: 10px auto; display: inline-block; border-radius: 4px; border: 1px dotted var(--red-deep);">
+                                    <small
+                                        style="display:block; font-size: 0.7rem; text-transform:uppercase;">Folio</small>
+                                    <strong id="ticket-folio"
+                                        style="font-size: 1.2rem; font-family: monospace;">---</strong>
+                                </div>
+
+                                <br>
+                                <img id="qr-image" src="" alt="QR Acceso"
+                                    style="margin: 15px auto; border: 4px solid var(--gold); padding: 5px; border-radius: 5px;">
+                                <p style="font-size: 0.8rem; color: #555;">Presenta este código en la entrada</p>
+                                <hr style="border: 0; border-top: 1px dashed var(--gold); margin: 15px 0;">
+                                <p
+                                    style="font-family: var(--font-script); font-size: 1.5rem; color: var(--gold); line-height: 1.3;">
+                                    "Gracias por formar parte de este día tan especial para mí. ¡Te espero para celebrar
+                                    juntos!"
+                                </p>
+                                <p style="margin-top: 10px; font-weight: bold; color: var(--red-deep);">- Valentina -
+                                </p>
+                            </div>
+                        </div>
+
+                        <button onclick="alert('Puedes tomar una captura de pantalla de tu boleto para guardarlo.')"
+                            style="margin-top: 15px; background: transparent; border: 1px solid #aaa; padding: 8px 15px; border-radius: 20px; cursor: pointer; color: #666; font-size: 0.8rem;">
+                            <i class="fas fa-camera"></i> Guardar Pase (Captura Pantalla)
+                        </button>
+                    </div>
+
+                </div>
+            </section>
+
+            <footer style="text-align: center; padding: 20px; font-size: 0.8rem; color: #aaa; background: #222;">
+                Valentina XV Años | 2026
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. PÉTALOS ---
+        function createPetals() {
+            const container = document.getElementById('petals-container');
+            const isMobile = window.innerWidth < 768;
+            const petalCount = isMobile ? 25 : 40; // Menos cantidad pero al frente
+            for (let i = 0; i < petalCount; i++) {
+                const petal = document.createElement('div');
+                petal.classList.add('petal');
+                petal.style.left = (Math.random() * 100) + 'vw';
+                petal.style.animationDuration = (Math.random() * 5 + (isMobile ? 4 : 6)) + 's';
+                petal.style.animationDelay = (Math.random() * 5) + 's';
+                const size = (Math.random() * (isMobile ? 10 : 12) + 8);
+                petal.style.width = size + 'px'; petal.style.height = size + 'px';
+                container.appendChild(petal);
+            }
+        }
+        createPetals();
+
+        // --- 1B. ESTRELLAS / GLITTER ---
+        function createStars() {
+            const container = document.getElementById('petals-container');
+            // Menos estrellas para móvil (30) vs Desktop (60)
+            const isMobile = window.innerWidth < 768;
+            const starCount = isMobile ? 30 : 60;
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+
+                // Posición aleatoria
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+
+                // Variables CSS para la animación (optimizado)
+                const duration = (Math.random() * 3 + 2) + 's';
+                const delay = (Math.random() * 5) + 's';
+                const size = (Math.random() * 3 + 1) + 'px';
+
+                star.style.setProperty('--duration', duration);
+                star.style.setProperty('--delay', delay);
+                star.style.width = size;
+                star.style.height = size;
+
+                container.appendChild(star);
+            }
+        }
+        createStars();
+
+        // --- 2. MINI JUEGO ---
+        let score = 0;
+        function clickTarget() {
+            score++;
+            const msg = document.getElementById('game-msg');
+            const target = document.getElementById('target-icon');
+            const area = document.getElementById('game-area');
+
+            if (score < 5) {
+                msg.innerText = "Puntos: " + score;
+                const maxX = area.clientWidth - 60;
+                const maxY = area.clientHeight - 60;
+                const newX = Math.random() * maxX;
+                const newY = Math.random() * maxY;
+                target.style.left = newX + "px";
+                target.style.top = newY + "px";
+            } else {
+                msg.innerText = "¡Gracias por ayudarme! 👸";
+                msg.style.color = "#d4af37";
+                target.style.display = "none";
+                area.innerHTML = "<div style='display:flex; justify-content:center; align-items:center; height:100%; flex-direction:column;'><i class='fas fa-crown' style='font-size:4rem; color:var(--gold); animation:beat 1s infinite;'></i><h3 style='margin-top:10px; color:var(--red-deep)'>¡Eres genial!</h3></div>";
+            }
+        }
+
+        // --- 3. FUNCIONES BASE ---
+        function openEnvelope() {
+            const wrapper = document.querySelector('.envelope-wrapper');
+            const overlay = document.getElementById('envelope-overlay');
+            const main = document.getElementById('main-content');
+            const musicBtn = document.getElementById('musicCtrl');
+            const audio = document.getElementById('bgMusic');
+
+            wrapper.classList.add('open');
+
+            // EFECTO SORPRESA (Globos y Confeti)
+            createConfettiAndBalloons();
+
+            // Intentar reproducir música
+            audio.volume = 0.5;
+            audio.play().then(() => { musicBtn.style.opacity = '1'; musicBtn.classList.add('spin'); })
+                .catch((e) => { console.log("Audio autoplay bloqueado", e); musicBtn.style.opacity = '1'; });
+
+            setTimeout(() => {
+                overlay.classList.add('remove-overlay');
+                main.classList.add('show-content');
+                revealOnScroll();
+            }, 2500); // Un poco más de tiempo para apreciar la animación
+        }
+
+        function createConfettiAndBalloons() {
+            const overlay = document.getElementById('envelope-overlay');
+            const colors = ['#cba135', '#8a0303', '#fff'];
+
+            // Globos
+            for (let i = 0; i < 15; i++) {
+                const b = document.createElement('div');
+                b.className = 'balloon';
+                b.style.left = Math.random() * 100 + '%';
+                b.style.backgroundColor = Math.random() > 0.5 ? '#8a0303' : '#cba135';
+                b.style.animationDuration = (3 + Math.random() * 2) + 's';
+                b.style.animationDelay = Math.random() + 's';
+                overlay.appendChild(b);
+            }
+
+            // Confeti
+            for (let i = 0; i < 50; i++) {
+                const c = document.createElement('div');
+                c.className = 'confetti';
+                c.style.left = Math.random() * 100 + '%';
+                c.style.top = '-10%';
+                c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                c.style.animationDuration = (2 + Math.random() * 2) + 's';
+                c.style.animationDelay = Math.random() * 0.5 + 's';
+                overlay.appendChild(c);
+            }
+        }
+
+        function toggleMusic() {
+            const audio = document.getElementById('bgMusic');
+            const btn = document.getElementById('musicCtrl');
+            if (audio.paused) { audio.play(); btn.classList.add('spin'); }
+            else { audio.pause(); btn.classList.remove('spin'); }
+        }
+
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal');
+            window.addEventListener('scroll', () => {
+                const windowHeight = window.innerHeight;
+                reveals.forEach((reveal) => {
+                    if (reveal.getBoundingClientRect().top < windowHeight - 100) {
+                        reveal.classList.add('active');
+                    }
+                });
+            });
+        }
+
+        // FECHA DE LOS XV
+        const targetDate = new Date("April 04, 2026 21:00:00").getTime();
+
+        setInterval(() => {
+            const now = new Date().getTime(); const diff = targetDate - now;
+            if (diff > 0) {
+                document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('m').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById('s').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+            } else {
+                document.querySelector('.countdown').innerHTML = "<p>¡Llegó el gran día!</p>";
+            }
+        }, 1000);
+
+        // --- 4. FORMULARIO Y PASE ---
+
+        // Función para generar un Folio único (ej. XV-A1B2)
+        function generateFolio() {
+            // Se usa una clave nueva para asegurar que todos generen un nuevo folio con esta actualización
+            let folio = localStorage.getItem('xv_folio_v2');
+            if (!folio) {
+                const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+                let randomId = '';
+                // Aumentamos a 5 caracteres para más combinaciones únicas (33 millones aprox)
+                for (let i = 0; i < 5; i++) {
+                    randomId += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                folio = 'XV-' + randomId;
+                localStorage.setItem('xv_folio_v2', folio);
+            }
+            return folio;
+        }
+
+        function showForm() {
+            const btn = document.querySelector('button[onclick="showForm()"]');
+            const formContainer = document.getElementById('form-container');
+
+            // 1. Obtener el Folio
+            const folio = generateFolio();
+            console.log("Tu Folio asignado es:", folio);
+
+            // 2. Insertarlo en el Iframe (Pre-llenado)
+            // IMPORTANTE: Reemplazar 'entry.1483886576' con el ID real de tu campo 'FOLIO' en Google Forms
+            // Para obtenerlo: Abre tu form -> 3 puntos -> Obtener enlace prellenado -> Escribe algo en el campo Folio -> Obtener enlace
+            const formId = "1FAIpQLSevzOVmctDbhRiE3XM8kdAD_ARP8-ouZzVvYy_LvkSJogzOVw";
+            const fieldId = "entry.287188929"; // <--- ID REAL DEL CAMPO 'FOLIO'
+
+            // Construimos la URL con el folio pre-cargado
+            const formUrl = `https://docs.google.com/forms/d/e/${formId}/viewform?embedded=true&${fieldId}=${folio}`;
+
+            // Actualizamos el iframe
+            const iframe = document.getElementById('gform-frame');
+            iframe.src = formUrl;
+
+            btn.style.display = 'none';
+            formContainer.style.display = 'block';
+        }
+
+        function showPass() {
+            const formContainer = document.getElementById('form-container');
+            const pass = document.getElementById('qr-pass');
+            const confirmSection = document.getElementById('confirm-section');
+
+            // 1. Mostrar el Folio en el Ticket
+            let folio = localStorage.getItem('xv_folio_v2');
+            if (!folio) { folio = generateFolio(); }
+            document.getElementById('ticket-folio').innerText = folio;
+
+            // 2. Generar QR con el Folio
+            const qrData = `VALIDO_XV_VALENTINA_2026_${folio}`;
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrData)}&color=8a0303&bgcolor=fffdfd`;
+            document.getElementById('qr-image').src = qrUrl;
+
+            // 3. Abrir WhatsApp con Confirmación (NUEVO)
+            const whatsappMsg = `¡Hola Valentina! Ya llené el formulario de asistencia. Mi folio de acceso es: *${folio}*. 🤠`;
+            const whatsappUrl = `https://wa.me/5216181032190?text=${encodeURIComponent(whatsappMsg)}`;
+            window.open(whatsappUrl, '_blank');
+
+            // Ocultar form y mostrar pase
+            formContainer.style.display = 'none';
+            pass.style.display = 'block';
+
+            // Scroll suave hacia el pase
+            confirmSection.scrollIntoView({ behavior: 'smooth' });
+
+            // Efecto de celebración
+        }
+
+        // --- LIGHTBOX LOGIC ---
+        function openLightbox(src) {
+            const lb = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            img.src = src;
+            lb.style.display = 'flex';
+            setTimeout(() => lb.classList.add('active'), 10);
+        }
+
+        function closeLightbox() {
+            const lb = document.getElementById('lightbox');
+            lb.classList.remove('active');
+            setTimeout(() => lb.style.display = 'none', 400);
+        }
+
+        // Asignar click a todas las imágenes de la invitación
+        window.addEventListener('load', () => {
+            document.querySelectorAll('img').forEach(img => {
+                // No aplicar a códigos QR o elementos decorativos que no son fotos
+                if (!img.id.includes('qr-image') && !img.src.includes('create-qr-code')) {
+                    img.style.cursor = 'zoom-in';
+                    img.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        openLightbox(img.src);
+                    });
+                }
+            });
+        });
+
+        // --- TYPEWRITER LOGIC ---
+        const phrase = "A veces los sueños se cumplen... y hoy mi sueño es compartir este momento contigo.";
+        let i = 0;
+        const speed = 70;
+        let typingStarted = false;
+
+        function typeWriter() {
+            if (i < phrase.length) {
+                document.getElementById("typewriter-text").innerHTML += phrase.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            } else {
+                setTimeout(() => {
+                    document.querySelector('.cursor').style.display = 'none';
+                }, 1500);
+            }
+        }
+
+        const typeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !typingStarted) {
+                    typingStarted = true;
+                    typeWriter();
+                }
+            });
+        }, { threshold: 0.5 });
+
+        window.addEventListener('load', () => {
+            const typeTarget = document.querySelector('.typewriter-container');
+            if (typeTarget) typeObserver.observe(typeTarget);
+        });
+    </script>
+
+    <!-- LIGHTBOX HTML -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <span id="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="Lightbox Image">
+    </div>
+</body>
+
+</html>
