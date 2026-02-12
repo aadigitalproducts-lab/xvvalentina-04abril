@@ -1,1184 +1,557 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mis XV Años | Valentina Najaivy</title>
+    <title>Mis XV Años - Valentina</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <style>
+        /* --- 1. CONFIGURACIÓN BASE (TEMA ROJO & GOLD) --- */
         :root {
-            --primary: #D88998;
-            --primary-light: #FDEEF1;
-            --primary-dark: #A65E6C;
-            --gold: #C5A059;
-            --white: #ffffff;
-            --light: #4a4a4a;
-            --glass: rgba(255, 255, 255, 0.95);
-            --glass-border: rgba(216, 137, 152, 0.4);
-            --shadow-gold: 0 10px 40px rgba(216, 137, 152, 0.2);
-            --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
+            --gold: #cba135;
+            --gold-light: #fbeea9;
+            --gold-shiny: #e6c76c;
+            --red-deep: #8a0303;
+            --red-bright: #c91818;
+            --bg-cream: #fffdfd;
+            --text-dark: #333333;
+            --text-red: #5e0b0b;
+            --font-script: 'Great Vibes', cursive;
+            --font-header: 'Cinzel', serif;
+            --font-body: 'Lato', sans-serif;
+            --whatsapp-green: #25D366;
         }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        html,
         body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #fffbfc;
-            color: var(--light);
             overflow-x: hidden;
-            line-height: 1.6;
-            background-image: radial-gradient(#d889981a 1px, transparent 1px);
-            background-size: 30px 30px;
-            padding-bottom: 90px;
+            width: 100%;
+            min-height: 100vh;
         }
-
-        body.locked {
+        body {
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            font-family: var(--font-body);
+            background-image: radial-gradient(rgba(203, 161, 53, 0.2) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        #petals-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
             overflow: hidden;
         }
-
-        h1,
-        h2,
-        h3,
-        h4 {
-            font-family: 'Cinzel', serif;
-            color: var(--primary);
-            letter-spacing: 2px;
-        }
-
-        .script-font {
-            font-family: 'Great Vibes', cursive;
-            color: var(--primary);
-            font-size: 3.5rem;
-            display: block;
-            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
-        }
-
-        .reveal {
-            opacity: 0;
-            filter: blur(10px);
-            transform: translateY(30px);
-            transition: all 1.2s var(--ease-out);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            filter: blur(0);
-            transform: translateY(0);
-        }
-
-        /* --- SOBRE (IDÉNTICO A FINAL) --- */
+        /* --- 2. EL SOBRE 3D --- */
         #envelope-overlay {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #fff0f3;
-            z-index: 9000;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #3a0000, #000);
             display: flex;
             justify-content: center;
             align-items: center;
+            z-index: 9999;
             transition: opacity 1.5s ease;
+            flex-direction: column;
         }
-
-        .envelope-flap {
+        .remove-overlay {
+            pointer-events: none;
+            opacity: 0;
+        }
+        .envelope-wrapper {
+            width: 320px;
+            height: 220px;
+            position: relative;
+            cursor: pointer;
+            animation: float 3s ease-in-out infinite;
+        }
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: var(--red-deep);
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
+            border-radius: 4px;
+        }
+        .flap {
             position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+        .flap.left {
             top: 0;
             left: 0;
-            width: 0;
-            height: 0;
-            border-left: 50vw solid transparent;
-            border-right: 50vw solid transparent;
-            border-top: 55vh solid #f8d7da;
-            transform-origin: top center;
-            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 9001;
-            pointer-events: none;
-            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+            border-width: 110px 160px 110px 0;
+            border-color: transparent #750202 transparent transparent;
+            z-index: 2;
         }
-
-        .envelope-flap.open {
-            transform: rotateX(180deg);
+        .flap.right {
+            top: 0;
+            right: 0;
+            border-width: 110px 0 110px 160px;
+            border-color: transparent transparent transparent #750202;
+            z-index: 2;
         }
-
-        .envelope-pocket {
-            position: absolute;
+        .flap.bottom {
             bottom: 0;
             left: 0;
-            width: 0;
-            height: 0;
-            border-left: 50vw solid transparent;
-            border-right: 50vw solid transparent;
-            border-bottom: 50vh solid #fff0f3;
-            z-index: 9002;
-            pointer-events: none;
+            border-width: 0 160px 120px 160px;
+            border-color: transparent transparent #960505 transparent;
+            z-index: 3;
+            filter: drop-shadow(0 -5px 5px rgba(0, 0, 0, 0.2));
         }
-
+        .flap.top {
+            top: 0;
+            left: 0;
+            border-width: 120px 160px 0 160px;
+            border-color: #8a0303 transparent transparent transparent;
+            z-index: 4;
+            transform-origin: top;
+            transition: transform 0.8s ease-in-out, z-index 0.2s linear 0.4s;
+        }
+        .flap.top::after {
+            content: '';
+            position: absolute;
+            top: -120px;
+            left: -160px;
+            width: 320px;
+            height: 120px;
+            border-top: 5px solid var(--gold);
+            clip-path: polygon(50% 100%, 0 0, 100% 0);
+        }
         .wax-seal {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120px;
-            height: 120px;
-            z-index: 9999;
-            cursor: pointer;
+            transform: translate(-50%, -40%);
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b);
             border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #f4c2c2, #d88998);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            z-index: 5;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: #fff;
-            border: 4px solid #fff;
-            transition: 0.3s;
+            font-family: var(--font-header);
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #5e4b18;
+            border: 2px solid #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
         }
-
-        .wax-seal:hover {
-            transform: translate(-50%, -50%) scale(1.1);
-        }
-
-        /* --- INTERACTIVIDAD --- */
-        .reaction-bar {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 10px 20px;
-            border-radius: 50px;
-            display: flex;
-            gap: 15px;
-            box-shadow: 0 10px 30px rgba(216, 137, 152, 0.3);
-            border: 2px solid var(--primary);
-            z-index: 1000;
-            opacity: 0;
-            transition: 1s;
-            pointer-events: none;
-        }
-
-        .reaction-bar.show {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .reaction-btn {
-            background: none;
-            border: none;
-            font-size: 1.8rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .floating-emoji {
-            position: fixed;
-            font-size: 2rem;
-            pointer-events: none;
-            z-index: 9999;
-            animation: floatUpFade 3s linear forwards;
-        }
-
-        @keyframes floatUpFade {
-            0% {
-                transform: translateY(0) scale(0.5);
-                opacity: 0;
-            }
-
-            20% {
-                opacity: 1;
-                transform: translateY(-50px) scale(1.2);
-            }
-
-            100% {
-                transform: translateY(-100vh) scale(1);
-                opacity: 0;
-            }
-        }
-
-        .flying-butterfly {
-            position: fixed;
-            font-size: 2rem;
-            pointer-events: none;
-            z-index: 9999;
-            animation: flyAcross 6s linear forwards;
-        }
-
-        @keyframes flyAcross {
-            0% {
-                transform: translate(-10vw, 10vh) rotate(15deg);
-                opacity: 0;
-            }
-
-            10% {
-                opacity: 1;
-            }
-
-            100% {
-                transform: translate(110vw, -20vh) rotate(-15deg);
-                opacity: 0;
-            }
-        }
-
-        /* --- HERO & COUNTDOWN --- */
-        .hero {
-            min-height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url('foto_principal.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-            color: #fff;
-            /* Texto blanco en el hero por defecto */
-        }
-
-        .hero h1 {
-            color: #fff;
-            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            font-size: 4.5rem;
-            margin-bottom: 5px;
-            animation: floatName 3s ease-in-out infinite;
-        }
-
-        .shimmer-name {
-            background: linear-gradient(to right, #ffffff 20%, #D88998 40%, #ffffff 60%, #D88998 80%);
-            background-size: 200% auto;
-            color: #fff;
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine-text 5s linear infinite;
-        }
-
-        @keyframes shine-text {
-            to {
-                background-position: 200% center;
-            }
-        }
-
-        @keyframes floatName {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .hero p,
-        .hero strong {
-            color: #fff !important;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
-        }
-
-        .hero .hero-separator i {
-            color: #fff;
-            text-shadow: 0 0 10px var(--primary);
-        }
-
-        .hero .countdown span {
-            color: var(--primary);
-            /* Mantener números en rosa pero con fondo blanco del círculo */
-        }
-
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-
-        .time-circle {
-            position: relative;
-            width: 85px;
-            height: 85px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-            background: #fff;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .time-circle::before {
-            content: '';
+        .card-preview {
             position: absolute;
-            top: -4px;
-            left: -4px;
-            right: -4px;
-            bottom: -4px;
-            border-radius: 50%;
-            border: 2px solid transparent;
-            border-top-color: var(--primary);
-            border-left-color: var(--gold);
-            animation: spinRing 6s infinite linear;
-        }
-
-        @keyframes spinRing {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .time-circle span {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .time-circle label {
-            font-size: 0.55rem;
-            text-transform: uppercase;
-            color: #888;
-        }
-
-        .btn {
-            display: inline-flex;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            background: #fffcf5;
+            z-index: 1;
+            transition: transform 1s ease 0.6s;
+            display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 8px;
-            padding: 15px 35px;
+            border: 1px solid var(--gold);
+        }
+        .card-preview h3 {
+            animation: softBeat 2s infinite;
+            color: var(--red-deep);
+        }
+        .envelope-wrapper.open .flap.top {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+        .envelope-wrapper.open .wax-seal {
+            opacity: 0;
+            transform: scale(1.5);
+        }
+        .envelope-wrapper.open .card-preview {
+            transform: translateY(-160px);
+            z-index: 6;
+        }
+        /* --- 3. EFECTOS --- */
+        .petal {
+            position: absolute;
+            top: -10%;
+            opacity: 0;
+            background: var(--red-bright);
+            border-radius: 100% 0% 100% 0%;
+            animation: fall linear infinite;
+        }
+        .petal:nth-child(even) { background: var(--gold); border-radius: 0% 100% 0% 100%; }
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 40px;
+            height: 50px;
+            background: var(--red-deep);
+            border-radius: 50%;
+            z-index: 2000;
+            animation: floatUp 4s ease-in forwards;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            z-index: 2000;
+            animation: confettiFall 3s linear forwards;
+        }
+        @keyframes floatUp { to { bottom: 120%; transform: translateX(20px); } }
+        @keyframes confettiFall { to { top: 120%; transform: rotate(720deg) translateX(50px); } }
+        /* --- 4. CONTENIDO PRINCIPAL --- */
+        #main-content {
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            position: relative;
+            z-index: 10;
+        }
+        .show-content { opacity: 1 !important; }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 0 20px rgba(138, 3, 3, 0.1);
+            padding-bottom: 80px;
+        }
+        section { padding: 40px 20px; text-align: center; position: relative; }
+        h1 {
+            font-family: var(--font-script);
+            font-size: 4.5rem;
+            color: var(--red-deep);
+            line-height: 1.2;
+            margin: 10px 0 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            font-family: var(--font-header);
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 2px solid var(--gold);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        .polaroid {
             background: #fff;
-            color: var(--primary);
-            border: 2px solid var(--primary);
+            padding: 12px;
+            padding-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            transform: rotate(-2deg);
+            max-width: 90%;
+            border: 1px solid var(--gold-light);
+        }
+        .polaroid img { width: 100%; display: block; }
+        .premium-hero {
+            animation: heroEntrance 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards, heroFloat 6s ease-in-out infinite 1.5s;
+            border: 4px solid var(--gold-light);
+            border-radius: 10px 10px 60px 10px;
+            overflow: hidden;
+            background: #fff;
+            padding: 8px;
+        }
+        @keyframes heroEntrance {
+            0% { transform: scale(0.8) translateY(20px) rotate(-5deg); opacity: 0; filter: blur(10px); }
+            100% { transform: scale(1) translateY(0) rotate(-2deg); opacity: 1; filter: blur(0); }
+        }
+        @keyframes heroFloat {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-10px) rotate(-1deg); }
+        }
+        /* Timeline de XV Años */
+        .story-timeline {
+            border-left: 2px dashed var(--red-deep);
+            margin-left: 20px;
+            padding-left: 30px;
+            text-align: left;
+        }
+        .story-block { position: relative; margin-bottom: 60px; }
+        .story-icon-box {
+            position: absolute;
+            left: -46px;
+            top: 0;
+            width: 32px;
+            height: 32px;
+            background: #fff;
+            border: 2px solid var(--red-deep);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--gold);
+            z-index: 2;
+        }
+        .romantic-photo {
+            position: relative;
+            background: #fff;
+            padding: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 15px;
+            border-radius: 4px;
+            border: 1px solid var(--gold);
+        }
+        .romantic-photo img { width: 100%; border-radius: 2px; display: block; }
+        .countdown { display: flex; justify-content: center; gap: 10px; margin-top: 20px; }
+        .time-box {
+            background: var(--red-deep);
+            color: var(--gold);
+            padding: 10px;
+            min-width: 60px;
+            border-radius: 5px;
+            border: 1px solid var(--gold);
+        }
+        .btn-calendar, .btn-maps {
+            padding: 12px 25px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             transition: 0.3s;
-            margin-top: 20px;
         }
-
-        .btn:hover {
-            background: var(--primary);
-            color: #fff;
-            transform: translateY(-2px);
+        .btn-calendar { border: 2px solid var(--red-deep); color: var(--red-deep); }
+        .btn-calendar:hover { background: var(--red-deep); color: #fff; }
+        .btn-maps { background: var(--text-dark); color: white; border: none; }
+        .btn-whatsapp-confirm {
+            display: flex;
+            background: var(--whatsapp-green);
+            color: white;
+            width: 90%;
+            max-width: 380px;
+            margin: 30px auto;
+            padding: 20px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
+            animation: pulseBtn 2s infinite;
+            transition: transform 0.3s;
         }
-
-        .music-control {
+        .btn-whatsapp-confirm:hover { transform: scale(1.02); }
+        .music-btn {
             position: fixed;
-            bottom: 100px;
+            bottom: 20px;
             right: 20px;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             background: #fff;
-            border: 2px solid var(--primary);
+            border: 2px solid var(--red-deep);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: var(--primary);
+            color: var(--red-deep);
+            z-index: 999;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            z-index: 100;
-            transition: 0.3s;
+            opacity: 0;
+            transition: opacity 1s;
         }
-
-        /* --- SECCIONES --- */
-        section {
-            padding: 80px 20px;
-            text-align: center;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .glass-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: var(--shadow-gold);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* --- JUEGO CORONA --- */
+        .spin { animation: spin 4s linear infinite; }
+        /* MINI JUEGO */
         #game-area {
             width: 100%;
             height: 250px;
-            background: #fff0f3;
-            border: 2px dashed var(--primary);
+            background: #fff0f0;
+            border: 2px dashed var(--red-deep);
             position: relative;
             overflow: hidden;
-            border-radius: 15px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-
-        #target-icon {
-            font-size: 3rem;
-            position: absolute;
-            cursor: pointer;
-            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.1));
-        }
-
-        /* --- RSVP GOOGLE FORMS --- */
-        .form-input {
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            border: 1px solid #ebd0d5;
             border-radius: 10px;
+            margin-top: 15px;
         }
-
-        .ticket {
-            background: #fff;
-            border: 2px solid var(--gold);
-            border-radius: 15px;
-            overflow: hidden;
-            max-width: 350px;
-            margin: 30px auto;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
-
-        .ticket-header {
-            background: var(--primary);
-            color: #fff;
-            padding: 15px;
-            font-weight: bold;
-        }
-
-        .ticket-shine {
-            position: absolute;
-            top: 0;
-            left: -150%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transform: skewX(-25deg);
-            animation: shine 4s infinite;
-        }
-
-        @keyframes shine {
-            0% {
-                left: -150%;
-            }
-
-            30% {
-                left: 150%;
-            }
-
-            100% {
-                left: 150%;
-            }
-        }
-
-        /* --- TYPEWRITER --- */
-        .typewriter-container {
-            font-family: 'Cinzel';
-            font-size: 1.5rem;
-            color: var(--primary-dark);
-            min-height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .cursor {
-            display: inline-block;
-            width: 3px;
-            height: 1.5rem;
-            background: var(--gold);
-            margin-left: 5px;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-
-            0%,
-            49% {
-                opacity: 1;
-            }
-
-            50%,
-            100% {
-                opacity: 0;
-            }
-        }
-
-        .toast-section {
-            background: linear-gradient(135deg, #fff 0%, #fff0f5 100%);
-            border: 2px solid var(--primary);
-            padding: 30px;
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .bubble {
-            position: absolute;
-            bottom: -20px;
-            background: rgba(255, 192, 203, 0.6);
-            border-radius: 50%;
-            width: 10px;
-            height: 10px;
-            animation: floatUpBubble 4s linear forwards;
-        }
-
-        @keyframes floatUpBubble {
-            0% {
-                transform: translateY(0);
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(-400px);
-                opacity: 0;
-            }
-        }
-
-        /* --- GALERÍA CARRUSEL --- */
-        .carousel-container {
-            position: relative;
-            width: 100%;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 3px solid var(--primary-light);
-            aspect-ratio: 4/5;
-            margin: 30px 0;
-            box-shadow: var(--shadow-gold);
-        }
-
-        .carousel-slide {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .carousel-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            flex-shrink: 0;
-            cursor: zoom-in;
-        }
-
-        .nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.8);
-            color: var(--primary);
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            z-index: 10;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.3s;
-        }
-
-        .nav-btn:hover {
-            background: var(--primary);
-            color: #fff;
-        }
-
-        .prev-btn {
-            left: 15px;
-        }
-
-        .next-btn {
-            right: 15px;
-        }
-
-        .dots {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 8px;
-            z-index: 10;
-        }
-
-        .dot {
-            width: 8px;
-            height: 8px;
-            background: rgba(216, 137, 152, 0.4);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .dot.active {
-            background: var(--primary);
-            transform: scale(1.3);
-        }
-
-        #lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 20000;
-            opacity: 0;
-            transition: 0.4s;
-        }
-
-        #lightbox.active {
-            opacity: 1;
-        }
-
-        #lightbox img {
-            max-width: 90%;
-            max-height: 85%;
-            border: 3px solid var(--primary);
-            border-radius: 8px;
-        }
-
-        /* --- MAPA --- */
-        .map-container {
-            margin-top: 25px;
-            border: 2px solid var(--primary-light);
-            border-radius: 15px;
-            overflow: hidden;
-            height: 250px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .map-container iframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
-            filter: grayscale(0.5) contrast(1.1);
-            transition: 0.5s;
-        }
-
-        .map-container:hover iframe {
-            filter: grayscale(0);
-        }
-
-        @media screen and (max-width: 600px) {
-            h1 {
-                font-size: 3rem !important;
-            }
-
-            .script-font {
-                font-size: 2.5rem;
-            }
-
-            .reaction-bar {
-                width: 90%;
-                justify-content: space-around;
-            }
-        }
+        #target-icon { font-size: 3rem; position: absolute; cursor: pointer; }
+        /* ANIMACIONES */
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes pulse { 0% { transform: translate(-50%, -40%) scale(1); } 50% { transform: translate(-50%, -40%) scale(1.1); } 100% { transform: translate(-50%, -40%) scale(1); } }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes fall { 0% { top: -10%; transform: translateX(0) rotate(0deg); opacity: 1; } 100% { top: 110%; transform: translateX(50px) rotate(360deg); opacity: 0; } }
+        @keyframes pulseBtn { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-
-<body class="locked">
-
-    <!-- Sonidos -->
-    <audio id="sound-clink" preload="auto">
-        <source src="https://assets.mixkit.co/active_storage/sfx/2004/2004-preview.mp3" type="audio/mp3">
+<body>
+    <audio id="bgMusic" loop playsinline>
+        <source src="musica.mp3" type="audio/mpeg">
     </audio>
-    <audio id="sound-click" preload="auto">
-        <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mp3">
-    </audio>
-    <audio id="bg-audio" loop>
-        <source src="musica.mp3" type="audio/mp3">
-    </audio>
-
-    <!-- Sobre Flat (Igual a Final) -->
+    <div class="music-btn" id="musicCtrl" onclick="toggleMusic()"><i class="fas fa-compact-disc"></i></div>
+    <div id="petals-container"></div>
     <div id="envelope-overlay">
-        <div class="envelope-flap" id="envelope-flap"></div>
-        <div class="envelope-pocket"></div>
-        <div class="wax-seal" id="wax-seal" onclick="openEnvelope()">
-            <i class="fas fa-crown"></i>
-            <span style="font-size: 0.7rem; margin-top: 5px; font-weight: bold;">ABRIR</span>
+        <div class="envelope-wrapper" onclick="openEnvelope()">
+            <div class="envelope">
+                <div class="flap top"></div>
+                <div class="flap right"></div>
+                <div class="flap bottom"></div>
+                <div class="flap left"></div>
+                <div class="wax-seal">15</div>
+                <div class="card-preview">
+                    <h3 style="font-family: var(--font-script); font-size: 2.5rem;">XV Valentina</h3>
+                </div>
+            </div>
         </div>
+        <p style="text-align: center; color: #fff; font-family: var(--font-header); letter-spacing: 2px; animation: pulse 2s infinite; margin-top: 50px;">TOCA EL SELLO</p>
     </div>
-
-    <div class="music-control" id="musicCtrl" onclick="toggleMusic()">
-        <i class="fas fa-play" id="music-icon"></i>
-    </div>
-
-    <!-- Barra Reacciones -->
-    <div class="reaction-bar" id="reactionBar">
-        <button class="reaction-btn" onclick="react('💖')">💖</button>
-        <button class="reaction-btn" onclick="releaseButterflies()">🦋</button>
-        <button class="reaction-btn" onclick="magicDust()">✨</button>
-        <button class="reaction-btn" onclick="celebrate()">🥳</button>
-    </div>
-
-    <div id="main-content" style="opacity:0; transition: 1.5s;">
-        <header class="hero">
-            <div class="reveal">
-                <p
-                    style="text-transform: uppercase; letter-spacing: 3px; font-size: 0.75rem; color: #666; margin-bottom: 20px;">
+    <div id="main-content">
+        <div class="container">
+            <section style="padding-top: 60px;">
+                <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">
                     Sus Abuelitos:<br>
-                    <strong style="color: var(--primary-dark);">J. Leon Hernández Rodarte</strong><br>
-                    <strong style="color: var(--primary-dark);">Brigida Diaz Ordaz Altamirano</strong><br>
+                    <strong style="color: var(--red-deep);">J. Leon Hernández Rodarte</strong><br>
+                    <strong style="color: var(--red-deep);">Brigida Diaz Ordaz Altamirano</strong><br>
                     Tienen el honor de invitarlos a los XV Años de su Nieta
                 </p>
-                <h1 class="shimmer-name">Valentina Najaivy</h1>
-
-
-                <div class="hero-separator"
-                    style="display:flex; align-items:center; justify-content:center; gap:15px; margin: 15px 0;">
-                    <div style="height:2px; width:40px; background:#fff;"></div>
-                    <i class="fas fa-crown"></i>
-                    <div style="height:2px; width:40px; background:#fff;"></div>
+                <h1>Valentina Najaivy</h1>
+                <div class="polaroid reveal">
+                    <img src="foto_principal.jpg" alt="Valentina XV" class="premium-hero">
                 </div>
-                <p style="letter-spacing: 4px; font-weight: 600; color: var(--primary-dark);">04 . ABRIL . 2026</p>
-
-                <div class="countdown" id="countdown"></div>
-
-                <a href="https://calendar.google.com" target="_blank" class="btn">
-                    <i class="far fa-calendar-alt"></i> Agendar Fecha
-                </a>
-            </div>
-        </header>
-
-        <section class="reveal">
-            <div class="typewriter-container">
-                <span id="typewriter-text"></span><span class="cursor"></span>
-            </div>
-        </section>
-
-        <!-- Brindis -->
-        <section class="reveal">
-            <div class="container">
-                <div class="toast-section">
-                    <span class="script-font" style="font-size: 2.2rem;">¡Celebra Conmigo!</span>
-                    <p>Toca la copa para enviar buenas vibras</p>
-                    <div id="toast-counter"
-                        style="color:var(--primary-dark); font-size: 2.8rem; font-weight:bold; margin: 10px 0;">85</div>
-                    <button class="btn" style="background:var(--primary); color:#fff;" onclick="makeToast()">
-                        <i class="fas fa-glass-cheers"></i> ¡Felicidades!
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Juego Corona -->
-        <section class="reveal">
-            <div class="container">
-                <div class="glass-card">
-                    <i class="fas fa-crown" style="font-size: 2.5rem; color: var(--gold); margin-bottom: 10px;"></i>
-                    <h2>¡Atrapa la Corona!</h2>
-                    <p>Ayúdame a encontrar mi corona. Tócala 5 veces.</p>
-                    <div id="game-area">
-                        <div id="target-icon" onclick="clickTarget()">👑</div>
+                <p class="reveal" style="font-style: italic; margin-top: 20px; font-family: var(--font-header); color: var(--gold);">
+                    "Hoy dejo de ser una niña para comenzar a soñar como mujer."
+                </p>
+            </section>
+            <section>
+                <div class="reveal">
+                    <h2>Save The Date</h2>
+                    <p style="font-size: 1.8rem; color: var(--red-deep); font-weight: bold; font-family: var(--font-script);">Sábado 04 de Abril</p>
+                    <p style="font-size: 1.2rem;">2026 | 9:00 PM</p>
+                    <div class="countdown">
+                        <div class="time-box"><span id="d">00</span><small>Días</small></div>
+                        <div class="time-box"><span id="h">00</span><small>Hrs</small></div>
+                        <div class="time-box"><span id="m">00</span><small>Min</small></div>
+                        <div class="time-box"><span id="s">00</span><small>Seg</small></div>
                     </div>
-                    <p id="game-msg" style="margin-top: 15px; font-weight: bold; color: var(--primary-dark);">Puntos: 0
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Detalles -->
-        <section class="reveal">
-            <div class="container">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
-                    <div class="glass-card">
-                        <i class="fas fa-user-tie"
-                            style="font-size: 2.5rem; color: var(--primary); margin-bottom: 15px;"></i>
-                        <h3>Código de Vestimenta</h3>
-                        <p><strong>FORMAL</strong></p>
-                        <p style="font-size: 0.8rem; margin-top: 10px; color: #777;">(Se reserva el color rojo para la
-                            festejada)</p>
-                    </div>
-                    <div class="glass-card">
-                        <i class="fas fa-gift"
-                            style="font-size: 2.5rem; color: var(--primary); margin-bottom: 15px;"></i>
-                        <h3>Regalos</h3>
-                        <p><strong>LLUVIA DE SOBRES</strong></p>
-                        <p style="font-size: 0.8rem; margin-top: 10px; color: #777;">Tu presencia es mi mayor regalo,
-                            pero si deseas tener un detalle, habrá un buzón en la entrada.</p>
-                    </div>
-                </div>
-
-                <div class="glass-card" style="margin-top: 30px;">
-                    <i class="fas fa-map-marker-alt"
-                        style="font-size: 2.5rem; color: var(--primary); margin-bottom: 15px;"></i>
-                    <h3>Ubicación</h3>
-                    <p><strong>El Rincón Eventos</strong></p>
-                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">Calle S/N, Localidad, CP. (Basado en
-                        ubicación real)</p>
-
-                    <div class="map-container">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1822.3168239049!2d-104.658786!3d24.00921!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x869bc802755a8d53%3A0xe9d0fdd2003c362e!2sEl%20Rincon%20Eventos!5e0!3m2!1ses!2smx!4v1707255000000!5m2!1ses!2smx"
-                            allowfullscreen="" loading="lazy"></iframe>
-                    </div>
-
-                    <div style="margin-top: 25px;">
-                        <a href="https://www.google.com/maps/place/El+Rincon+Eventos/@24.00921,-104.658786,17z"
-                            target="_blank" class="btn">
-                            <i class="fas fa-directions"></i> Cómo llegar (Google Maps)
+                    <div style="margin-top: 40px; display:flex; flex-direction:column; align-items:center; gap:15px;">
+                        <a href="https://calendar.google.com/calendar/r/eventedit?text=XV+Años+Valentina+Najaivy&dates=20260404T210000/20260405T030000&location=El+Rincon+Eventos" target="_blank" class="btn-calendar">
+                            <i class="far fa-calendar-alt"></i> Agendar Evento
+                        </a>
+                        <a href="https://www.google.com/maps/place/El+Rincon+Eventos" target="_blank" class="btn-maps">
+                            <i class="fas fa-map-pin"></i> Ver Ubicación
                         </a>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Galería de Fotos -->
-        <section class="reveal">
-            <div class="container">
-                <span class="script-font">Recuerdos</span>
-                <h2>Galería de Fotos</h2>
-                <div class="carousel-container">
-                    <div class="carousel-slide" id="carouselSlide">
-                        <img src="recuerdo_1.jpg" alt="Recuerdo 1" onclick="openLightbox(this.src)">
-                        <img src="recuerdo_2.jpg" alt="Recuerdo 2" onclick="openLightbox(this.src)">
-                        <img src="recuerdo_3.jpg" alt="Recuerdo 3" onclick="openLightbox(this.src)">
-                        <img src="recuerdo_4.jpg" alt="Recuerdo 4" onclick="openLightbox(this.src)">
+            </section>
+            <section style="background: #fff; border-top: 1px solid #eee; border-bottom: 1px solid #eee;">
+                <h2>Mi Historia</h2>
+                <div class="story-timeline">
+                    <div class="story-block reveal">
+                        <div class="story-icon-box"><i class="fas fa-baby"></i></div>
+                        <h3 style="color: var(--red-deep);">Un Comienzo Feliz</h3>
+                        <div class="romantic-photo"><img src="recuerdo_1.jpg" alt="Recuerdo"></div>
                     </div>
-                    <button class="nav-btn prev-btn" onclick="moveSlide(-1)"><i
-                            class="fas fa-chevron-left"></i></button>
-                    <button class="nav-btn next-btn" onclick="moveSlide(1)"><i
-                            class="fas fa-chevron-right"></i></button>
-                    <div class="dots" id="carouselDots"></div>
+                    <!-- Agrega más bloques si lo deseas -->
                 </div>
-            </div>
-        </section>
-
-        <!-- RSVP GOOGLE FORMS -->
-        <section class="reveal" id="rsvp">
-            <div class="container">
-                <div class="glass-card" style="border: 2px solid var(--primary);">
+            </section>
+            <section>
+                <div class="reveal">
+                    <h2>Detalles</h2>
+                    <i class="fas fa-female" style="font-size: 3rem; color: var(--red-deep); margin-bottom:15px;"></i>
+                    <p><strong>Código de Vestimenta: FORMAL</strong></p>
+                    <p style="font-size: 0.9rem; color:#666;">(Se reserva el color rojo para la festejada)</p>
+                    
+                    <div style="margin-top: 30px; border: 1px dashed var(--gold); padding: 20px; border-radius: 10px; display:inline-block;">
+                        <i class="fas fa-gift" style="font-size: 2rem; color: var(--gold); margin-bottom: 10px;"></i>
+                        <p><strong>Lluvia de Sobres</strong></p>
+                        <p style="font-size: 0.9rem;">Tu presencia es mi mayor regalo.</p>
+                    </div>
+                </div>
+            </section>
+            <section id="confirm-section" style="background: #fff; padding-bottom: 60px;">
+                <div class="reveal">
                     <h2>Confirmación</h2>
-                    <p style="margin-bottom: 30px;">Por favor confirma tu asistencia</p>
-
-                    <div id="rsvp-intro">
-                        <button onclick="showForm()" class="btn"
-                            style="width: 100%; justify-content: center; background: var(--primary); color:#fff;">
-                            <i class="fas fa-clipboard-check"></i> CONFIRMAR ASISTENCIA
-                        </button>
-                    </div>
-
-                    <div id="form-container" style="display:none; margin-top:30px;">
-                        <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px;">Tu folio se generará
-                            automáticamente al enviar el formulario.</p>
-                        <div
-                            style="position: relative; padding-bottom: 150%; height: 0; overflow: hidden; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-                            <iframe id="gform-frame"
-                                style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;"></iframe>
-                        </div>
-                        <button onclick="showPass()" class="btn"
-                            style="width: 100%; justify-content: center; margin-top: 20px; background: var(--gold); color:#fff;">
-                            <i class="fas fa-ticket-alt"></i> YA LO ENVIÉ: OBTENER MI PASE
-                        </button>
-                    </div>
-
-                    <!-- Ticket Final -->
-                    <div id="qr-pass" style="display:none;">
-                        <div class="ticket">
-                            <div class="ticket-shine"></div>
-                            <div class="ticket-header">
-                                <i class="fas fa-crown"></i> PASE DE ACCESO XV
-                            </div>
-                            <div class="ticket-body" style="padding: 25px;">
-                                <h3 style="color: var(--primary-dark);">INVITADO</h3>
-                                <div
-                                    style="background: var(--primary-light); padding: 8px 15px; border-radius: 8px; display: inline-block; border: 1px dashed var(--primary); margin: 15px 0;">
-                                    <small
-                                        style="display:block; font-size: 0.6rem; text-transform:uppercase;">FOLIO</small>
-                                    <strong id="ticket-folio"
-                                        style="font-size: 1.3rem; font-family: monospace;">---</strong>
-                                </div>
-                                <div style="margin: 15px 0;">
-                                    <img id="qr-image"
-                                        style="width: 150px; border: 3px solid var(--primary-light); padding: 5px; border-radius: 10px;">
-                                </div>
-                                <p style="font-size: 0.75rem; color: #888;">Toma captura de pantalla de este boleto.</p>
-                                <p class="script-font" style="font-size: 1.8rem; line-height:1; margin-top:10px;">
-                                    Gracias por venir</p>
-                            </div>
-                        </div>
-                    </div>
+                    <p style="margin-bottom: 25px;">Por favor, confirma tu asistencia vía WhatsApp:</p>
+                    <a href="https://wa.me/5216181032190?text=¡Hola Valentina! Confirmo mi asistencia a tus XV Años. ¡Allí nos vemos! 💃🏻✨" 
+                       target="_blank" class="btn-whatsapp-confirm">
+                        <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i> CONFIRMAR POR WHATSAPP
+                    </a>
+                    
+                    <p style="font-size: 0.8rem; color: #999; margin-top: 15px;">Presiona el botón para enviar un mensaje directo.</p>
                 </div>
-            </div>
-        </section>
-
-        <footer style="text-align:center; padding: 40px; color: #aaa; font-size: 0.8rem;">
-            Valentina Najaivy XV Años | 2026
-        </footer>
+            </section>
+            <footer style="text-align: center; padding: 30px; font-size: 0.8rem; color: #aaa; background: #222;">
+                Valentina XV Años | 2026
+            </footer>
+        </div>
     </div>
-
-    <!-- Lightbox -->
-    <div id="lightbox" onclick="closeLightbox()"><img id="lb-img" src=""></div>
-
     <script>
-        const audio = document.getElementById('bg-audio');
-        const clickSound = document.getElementById('sound-click');
-        const clinkSound = document.getElementById('sound-clink');
-        let isPlaying = false;
-
-        function playClick() { clickSound.currentTime = 0; clickSound.play().catch(() => { }); }
-
-        // Abrir Sobre (Idéntico a Final)
+        function createPetals() {
+            const container = document.getElementById('petals-container');
+            const petalCount = 30;
+            for (let i = 0; i < petalCount; i++) {
+                const petal = document.createElement('div');
+                petal.classList.add('petal');
+                petal.style.left = (Math.random() * 100) + 'vw';
+                petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                petal.style.animationDelay = (Math.random() * 5) + 's';
+                const size = (Math.random() * 10 + 10);
+                petal.style.width = size + 'px'; petal.style.height = size + 'px';
+                container.appendChild(petal);
+            }
+        }
+        createPetals();
         function openEnvelope() {
-            playClick();
-            document.getElementById('envelope-flap').classList.add('open');
-            document.getElementById('wax-seal').style.opacity = '0';
-            document.getElementById('wax-seal').style.pointerEvents = 'none';
-
+            const wrapper = document.querySelector('.envelope-wrapper');
+            const overlay = document.getElementById('envelope-overlay');
+            const main = document.getElementById('main-content');
+            const musicBtn = document.getElementById('musicCtrl');
+            const audio = document.getElementById('bgMusic');
+            wrapper.classList.add('open');
+            audio.volume = 0.5;
+            audio.play().then(() => { musicBtn.style.opacity = '1'; musicBtn.classList.add('spin'); })
+                .catch(() => { musicBtn.style.opacity = '1'; });
             setTimeout(() => {
-                document.getElementById('envelope-overlay').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('envelope-overlay').style.display = 'none';
-                    document.getElementById('main-content').style.opacity = '1';
-                    document.body.classList.remove('locked');
-                    document.getElementById('reactionBar').classList.add('show');
-                    toggleMusic(true);
-                    startTypewriter();
-                    renderReveals();
-                }, 1000);
-            }, 800);
+                overlay.classList.add('remove-overlay');
+                main.classList.add('show-content');
+                revealOnScroll();
+            }, 2200);
         }
-
-        function toggleMusic(force = false) {
-            playClick();
-            const icon = document.getElementById('music-icon');
-            if (isPlaying && !force) {
-                audio.pause(); isPlaying = false; icon.className = 'fas fa-play';
-            } else {
-                audio.play(); isPlaying = true; icon.className = 'fas fa-pause';
+        function toggleMusic() {
+            const audio = document.getElementById('bgMusic');
+            const btn = document.getElementById('musicCtrl');
+            if (audio.paused) { audio.play(); btn.classList.add('spin'); }
+            else { audio.pause(); btn.classList.remove('spin'); }
+        }
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal');
+            window.addEventListener('scroll', () => {
+                reveals.forEach((reveal) => {
+                    if (reveal.getBoundingClientRect().top < window.innerHeight - 100) {
+                        reveal.classList.add('active');
+                    }
+                });
+            });
+        }
+        const targetDate = new Date("April 04, 2026 21:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime(); const diff = targetDate - now;
+            if (diff > 0) {
+                document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('m').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById('s').innerText = Math.floor((diff % (1000 * 60)) / 1000);
             }
-        }
-
-        // Typewriter 
-        const phrase = "A veces los sueños se cumplen... y hoy mi sueño es compartir este momento contigo.";
-        let i = 0;
-        function startTypewriter() {
-            if (i < phrase.length) {
-                document.getElementById("typewriter-text").innerHTML += phrase.charAt(i);
-                i++;
-                setTimeout(startTypewriter, 70);
-            } else {
-                setTimeout(() => document.querySelector('.cursor').style.display = 'none', 1000);
-            }
-        }
-
-        // Countdown April 4 2026
-        const target = new Date('2026-04-04T21:00:00').getTime();
-        function updateCD() {
-            const now = new Date().getTime();
-            const d = target - now;
-            const days = Math.floor(d / 86400000);
-            const hrs = Math.floor((d % 86400000) / 3600000);
-            const mins = Math.floor((d % 3600000) / 60000);
-            const secs = Math.floor((d % 60000) / 1000);
-            document.getElementById('countdown').innerHTML = `
-                <div class="time-circle"><span>${days}</span><label>Días</label></div>
-                <div class="time-circle"><span>${hrs}</span><label>Hrs</label></div>
-                <div class="time-circle"><span>${mins}</span><label>Min</label></div>
-                <div class="time-circle"><span>${secs}</span><label>Seg</label></div>
-            `;
-        }
-        setInterval(updateCD, 1000); updateCD();
-
-        // Reacciones Originales
-        function react(emoji) {
-            playClick();
-            const el = document.createElement('div');
-            el.innerHTML = emoji;
-            el.className = 'floating-emoji';
-            el.style.left = Math.random() * 80 + 10 + 'vw';
-            el.style.bottom = '100px';
-            document.body.appendChild(el);
-            setTimeout(() => el.remove(), 3000);
-        }
-
-        function releaseButterflies() {
-            playClick();
-            for (let i = 0; i < 10; i++) {
-                const b = document.createElement('div');
-                b.innerHTML = '🦋'; b.className = 'flying-butterfly';
-                b.style.top = Math.random() * 80 + 10 + 'vh';
-                b.style.left = '-50px';
-                b.style.animationDuration = (Math.random() * 2 + 4) + 's';
-                document.body.appendChild(b);
-                setTimeout(() => b.remove(), 6000);
-            }
-        }
-
-        function magicDust() {
-            playClick();
-            for (let i = 0; i < 30; i++) {
-                const s = document.createElement('div');
-                s.style.position = 'fixed'; s.style.width = '6px'; s.style.height = '6px';
-                s.style.background = 'gold'; s.style.borderRadius = '50%'; s.style.boxShadow = '0 0 10px gold';
-                s.style.left = Math.random() * 100 + 'vw'; s.style.top = Math.random() * 100 + 'vh';
-                s.style.zIndex = '9999'; s.style.animation = 'floatUpFade 1.5s linear forwards';
-                document.body.appendChild(s);
-                setTimeout(() => s.remove(), 1500);
-            }
-        }
-
-        function celebrate() {
-            playClick();
-            const colors = ['#D88998', '#F9E4E9', 'gold'];
-            for (let i = 0; i < 50; i++) {
-                const c = document.createElement('div');
-                c.style.position = 'fixed'; c.style.width = '8px'; c.style.height = '8px';
-                c.style.background = colors[Math.floor(Math.random() * 3)];
-                c.style.left = Math.random() * 100 + 'vw'; c.style.top = '-10px';
-                c.style.zIndex = '9998'; c.style.animation = `fall ${Math.random() * 2 + 2}s linear forwards`;
-                document.body.appendChild(c);
-                setTimeout(() => c.remove(), 4000);
-            }
-        }
-
-        // Toast
-        let toasts = 85;
-        function makeToast() {
-            clinkSound.currentTime = 0; clinkSound.play().catch(() => { });
-            toasts++;
-            document.getElementById('toast-counter').innerText = toasts;
-            for (let i = 0; i < 5; i++) {
-                const b = document.createElement('div');
-                b.className = 'bubble'; b.style.left = Math.random() * 100 + '%';
-                document.querySelector('.toast-section').appendChild(b);
-                setTimeout(() => b.remove(), 4000);
-            }
-        }
-
-        // Game
-        let pts = 0;
-        function clickTarget() {
-            pts++;
-            const t = document.getElementById('target-icon');
-            const a = document.getElementById('game-area');
-            const m = document.getElementById('game-msg');
-            if (pts < 5) {
-                m.innerText = "Puntos: " + pts;
-                t.style.left = Math.random() * (a.clientWidth - 60) + 'px';
-                t.style.top = Math.random() * (a.clientHeight - 60) + 'px';
-            } else {
-                m.innerText = "¡Gracias por ayudarme! 👸";
-                a.innerHTML = `<div style="display:flex; height:100%; justify-content:center; align-items:center;"><i class="fas fa-heart" style="font-size:4rem; color:var(--primary); animation:spinRing 2s infinite;"></i></div>`;
-            }
-        }
-
-        // RSVP Folio
-        function generateFolio() {
-            let f = localStorage.getItem('xv_folio_v4');
-            if (!f) {
-                const c = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-                f = 'XV-';
-                for (let i = 0; i < 5; i++) f += c.charAt(Math.floor(Math.random() * c.length));
-                localStorage.setItem('xv_folio_v4', f);
-            }
-            return f;
-        }
-
-        function showForm() {
-            const f = generateFolio();
-            const sid = "1FAIpQLSevzOVmctDbhRiE3XM8kdAD_ARP8-ouZzVvYy_LvkSJogzOVw";
-            const eid = "entry.287188929";
-            document.getElementById('gform-frame').src = `https://docs.google.com/forms/d/e/${sid}/viewform?embedded=true&${eid}=${f}`;
-            document.getElementById('rsvp-intro').style.display = 'none';
-            document.getElementById('form-container').style.display = 'block';
-        }
-
-        function showPass() {
-            const f = generateFolio();
-            document.getElementById('form-container').style.display = 'none';
-            document.getElementById('qr-pass').style.display = 'block';
-            document.getElementById('ticket-folio').innerText = f;
-            document.getElementById('qr-image').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=XV_VAL_2026_${f}&color=A65E6C`;
-
-            const wmsg = `¡Hola! Confirmé mi asistencia. Mi folio es: *${f}*`;
-            setTimeout(() => window.open(`https://wa.me/5216181032190?text=${encodeURIComponent(wmsg)}`, '_blank'), 2000);
-        }
-
-        // Scroll reveals
-        function renderReveals() {
-            const revs = document.querySelectorAll('.reveal');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
-            }, { threshold: 0.1 });
-            revs.forEach(r => observer.observe(r));
-        }
-
-        // Galería / Carrusel
-        let currentSlide = 0;
-        const slide = document.getElementById('carouselSlide');
-        const totalSlides = slide.children.length;
-        const dotsContainer = document.getElementById('carouselDots');
-
-        for (let j = 0; j < totalSlides; j++) {
-            const d = document.createElement('div');
-            d.className = 'dot' + (j === 0 ? ' active' : '');
-            d.onclick = () => goToSlide(j);
-            dotsContainer.appendChild(d);
-        }
-
-        function updateCarousel() {
-            slide.style.transform = `translateX(-${currentSlide * 100}%)`;
-            const ds = document.querySelectorAll('.dot');
-            ds.forEach((d, idx) => d.classList.toggle('active', idx === currentSlide));
-        }
-
-        function moveSlide(dir) {
-            currentSlide = (currentSlide + dir + totalSlides) % totalSlides;
-            updateCarousel();
-        }
-
-        function goToSlide(idx) {
-            currentSlide = idx;
-            updateCarousel();
-        }
-
-        // Lightbox
-        function openLightbox(src) {
-            playClick();
-            document.getElementById('lb-img').src = src;
-            const lb = document.getElementById('lightbox');
-            lb.style.display = 'flex';
-            setTimeout(() => lb.classList.add('active'), 10);
-        }
-
-        function closeLightbox() {
-            const lb = document.getElementById('lightbox');
-            lb.classList.remove('active');
-            setTimeout(() => lb.style.display = 'none', 400);
-        }
-
-        const style = document.createElement('style');
-        style.innerHTML = `@keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }`;
-        document.head.appendChild(style);
+        }, 1000);
     </script>
 </body>
-
 </html>
